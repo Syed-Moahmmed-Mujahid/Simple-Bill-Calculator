@@ -7,7 +7,7 @@ body {
     max-width: 500px;
     margin: 40px auto;
     padding: 24px;
-    border-radius: px;
+    border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.992);
 }
 h2, h4 {
@@ -18,9 +18,10 @@ h2, h4 {
     display: flex;
     gap: 8px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 .input-section input {
-    flex: 1;
+    flex: 1 1 30%;
     padding: 8px;
 }
 .input-section button {
@@ -87,3 +88,15 @@ h2, h4 {
     border-radius: 6px;
     display: none;
 }
+
+
+/* Hide number input arrows */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
