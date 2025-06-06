@@ -6,6 +6,7 @@ Made by **Syed Mohammed Mujahid**.
 
 - Add item name and price.
 - See all items in your bill.
+- Add Quantity u have taken
 - Delete items if needed.
 - Shows the total amount.
 - Save your bill even if you reload the page.
@@ -13,7 +14,7 @@ Made by **Syed Mohammed Mujahid**.
 
 ## How to Use
 
-1. Enter the item name and price, then click **Enter**.
+1. Enter the item name,Quantity and price, then click **Enter**.
 2. All items will show in the list with their prices.
 3. Click **Delete** to remove any item.
 4. Click **Bill** to see the final bill.
