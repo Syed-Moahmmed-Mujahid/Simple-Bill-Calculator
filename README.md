@@ -22,10 +22,9 @@ Made by **Syed Mohammed Mujahid**.
 ## My Experience
 
 I made this project to learn more about HTML, CSS, and JavaScript.  
-The HTML and CSS part was easy for me, but the JavaScript part took more time to understand.  
+The HTML and CSS part was easy for me, but the JavaScript part took more time to understand and taken help from AI.  
 I learned how to add, delete, and save items using JavaScript.  
 To help myself and others, I added many comments in the JavaScript code to explain each step.  
-Now I feel more confident in using JavaScript for web projects.
 
 ##screen shot:-)
 ![simple bill calculator](https://github.com/user-attachments/assets/89da1e0f-8cbf-4356-9531-277e0d89f11a)
