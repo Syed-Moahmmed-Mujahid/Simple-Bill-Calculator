@@ -1,97 +1,129 @@
-// Try to load the items array from localStorage, or start with an empty array if nothing is saved yet
+// Retrieve saved bill items from localStorage, or initialize an empty array if none exist
 let items = JSON.parse(localStorage.getItem('billItems')) || [];
 
-// Save the current items array to localStorage as a string
+// Save current items array to localStorage as a JSON string
 function saveToLocal() {
     localStorage.setItem('billItems', JSON.stringify(items));
 }
 
-// Add a new item to the bill
+// Function to add a new item to the bill
 function addItem() {
-    // Get the item name and price from the input fields
+    // Get input values from the form fields
     const name = document.getElementById('itemName').value.trim();
     const priceStr = document.getElementById('itemPrice').value.trim();
-    const price = parseFloat(priceStr); // Convert the price to a number
+    const qtyStr = document.getElementById('itemQty').value.trim();
 
-    // Check if name is not empty, price is a number, and price is greater than 0
-    if (name && !isNaN(price) && price > 0) {
-        // Add the new item to the array
-        items.push({ name, price });
-        saveToLocal(); // Save the updated array to localStorage
+    // Convert input strings to appropriate number types
+    const price = parseFloat(priceStr);
+    const quantity = parseInt(qtyStr);
 
-        // Clear the input fields for the next entry
+    // Validate the inputs: name is not empty, price and quantity are valid numbers and > 0
+    if (name && !isNaN(price) && price > 0 && !isNaN(quantity) && quantity > 0) {
+        // Add the new item to the items array
+        items.push({ name, price, quantity });
+
+        // Save updated items to localStorage
+        saveToLocal();
+
+        // Clear input fields after successful addition
         document.getElementById('itemName').value = '';
         document.getElementById('itemPrice').value = '';
+        document.getElementById('itemQty').value = '1';
 
-        updateBill(); // Update the displayed bill
-        document.getElementById('finalBill').style.display = 'none'; // Hide the final bill if it was shown
+        // Update the bill display
+        updateBill();
+
+        // Hide the final bill section (if previously shown)
+        document.getElementById('finalBill').style.display = 'none';
     } else {
-        // Show an alert if the input is invalid
-        alert('Please enter a valid item name and price.');
+        // Show error message if validation fails
+        alert('Please enter a valid item name, price, and quantity.');
     }
 }
 
-// Delete an item from the bill by its index
+// Function to delete an item from the bill by index
 function deleteItem(index) {
-    items.splice(index, 1); // Remove the item at the given index
-    saveToLocal(); // Save the updated array to localStorage
-    updateBill(); // Update the displayed bill
-    document.getElementById('finalBill').style.display = 'none'; // Hide the final bill if it was shown
+    // Remove the item from the array
+    items.splice(index, 1);
+
+    // Save updated array to localStorage
+    saveToLocal();
+
+    // Refresh the bill display
+    updateBill();
+
+    // Hide the final bill section
+    document.getElementById('finalBill').style.display = 'none';
 }
 
-// Update the bill display on the page
+// Function to update the displayed bill item list and total amount
 function updateBill() {
     const billItems = document.getElementById('billItems');
-    billItems.innerHTML = ''; // Clear the current list
+    
+    // Clear the current list
+    billItems.innerHTML = '';
 
-    let total = 0; // To keep track of the total amount
+    let total = 0; // To calculate the total amount
 
-    // Loop through all items and create a list item for each
+    // Loop through each item and create a list element with details and a delete button
     items.forEach((item, idx) => {
         const li = document.createElement('li');
-        li.innerHTML = `${item.name} - ₹${item.price.toFixed(2)}
+        li.innerHTML = `${item.name} - ₹${item.price.toFixed(2)} × ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}
             <button class="delete-btn" onclick="deleteItem(${idx})">Delete</button>`;
-        billItems.appendChild(li); // Add the list item to the bill
-        total += item.price; // Add to the total
+
+        billItems.appendChild(li);
+
+        // Accumulate total price
+        total += item.price * item.quantity;
     });
 
-    // Show the total amount
+    // Update the total amount display
     document.getElementById('totalAmount').textContent = `Total: ₹${total.toFixed(2)}`;
 }
 
-// Show the final bill in a summary box
+// Function to display the final bill summary
 function showBill() {
-    // If there are no items, alert the user
+    // Check if there are items to show
     if (items.length === 0) {
         alert('No items to show in the bill!');
         return;
     }
 
-    // Build the HTML for the final bill
     let billHTML = '<strong>Final Bill</strong><ul>';
     let total = 0;
+
+    // Loop through items and create bill summary in HTML format
     items.forEach(item => {
-        billHTML += `<li>${item.name} - ₹${item.price.toFixed(2)}</li>`;
-        total += item.price;
+        billHTML += `<li>${item.name} - ₹${item.price.toFixed(2)} × ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</li>`;
+        total += item.price * item.quantity;
     });
+
+    // Add total to the HTML
     billHTML += `</ul><strong>Total: ₹${total.toFixed(2)}</strong>`;
 
-    // Display the final bill
+    // Set the content and make it visible
     const finalBill = document.getElementById('finalBill');
     finalBill.innerHTML = billHTML;
     finalBill.style.display = 'block';
 }
 
-// Reset the bill and clear everything from localStorage
+// Function to reset the bill and clear all items
 function resetBill() {
-    // Ask the user to confirm before resetting
+    // Ask for user confirmation before clearing
     if (confirm('Are you sure you want to reset the bill?')) {
-        items = []; // Clear the items array
-        saveToLocal(); // Clear localStorage
-        updateBill(); // Update the displayed bill
-        document.getElementById('finalBill').style.display = 'none'; // Hide the final bill
+        // Clear items array
+        items = [];
+
+        // Save empty list to localStorage
+        saveToLocal();
+
+        // Refresh the displayed list
+        updateBill();
+
+        // Hide the final bill section
+        document.getElementById('finalBill').style.display = 'none';
     }
 }
 
-// When the page loads, display the bill (with any saved items)
+// Initialize the bill display on page load
 updateBill();
