@@ -11,10 +11,12 @@
         <h2>Project 07:- Simple Bill Calculator</h2>
        
         <div class="input-section">
-            <input type="text" id="itemName" placeholder="Item Name" autocomplete="off">
-            <input type="text" id="itemPrice" placeholder="Item Price (₹)" autocomplete="off">
-            <button onclick="addItem()">Enter</button>
+            <input type="text" id="itemName" placeholder="Item Name" autocomplete="off" onkeydown="handleKey(event, 'itemPrice')">
+            <input type="number" id="itemPrice" placeholder="Item Price (₹)" autocomplete="off" inputmode="decimal" pattern="\d+(\.\d{1,2})?" onkeydown="handleKey(event, 'itemQty')">
+            <input type="number" id="itemQty" placeholder="Quantity" min="1" value="1" autocomplete="off" onkeydown="handleKey(event, 'submit')">
+            <button id="submit" onclick="addItem()">Enter</button>
         </div>
+
         <div class="bill-section">
             <h3>Bill</h3>
             <ul id="billItems"></ul>
@@ -24,8 +26,21 @@
                 <button onclick="resetBill()">Reset</button>
             </div>
         </div>
+
         <div id="finalBill" class="final-bill"></div>
     </div>
+    <script>
+        function handleKey(event, nextId) {
+            if (event.key === 'Enter') {
+                if (nextId === 'submit') {
+                    addItem();
+                } else {
+                    document.getElementById(nextId).focus();
+                }
+            }
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
+
