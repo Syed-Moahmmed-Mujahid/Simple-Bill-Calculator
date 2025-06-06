@@ -28,7 +28,8 @@ I learned how to add, delete, and save items using JavaScript.
 To help myself and others, I added many comments in the JavaScript code to explain each step.  
 
 ##screen shot:-)
-![simple bill calculator](https://github.com/user-attachments/assets/89da1e0f-8cbf-4356-9531-277e0d89f11a)
+![bill calaulator](https://github.com/user-attachments/assets/e3cd8b2a-5110-4fa8-afa1-1181d710af8f)
+
 
 
 ---
